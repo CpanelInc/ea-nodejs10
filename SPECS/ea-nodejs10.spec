@@ -24,20 +24,12 @@ Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine.
 mkdir -p $RPM_BUILD_ROOT/opt/cpanel/ea-nodejs10
 cp -r ./* $RPM_BUILD_ROOT/opt/cpanel/ea-nodejs10
 
-mkdir -p /usr/bin
-ln -s $RPM_BUILD_ROOT/opt/cpanel/ea-nodejs10/bin/node $RPM_BUILD_ROOT/usr/bin/node
-ln -s $RPM_BUILD_ROOT/opt/cpanel/ea-nodejs10/bin/npm $RPM_BUILD_ROOT/usr/bin/npm
-ln -s $RPM_BUILD_ROOT/opt/cpanel/ea-nodejs10/bin/npx $RPM_BUILD_ROOT/usr/bin/npx
-
 %clean
 [ "$RPM_BUILD_ROOT" != "/" ] && rm -rf %{buildroot}
 
 %files
 /opt/cpanel/ea-nodejs10
 %attr(0755,root,root) /opt/cpanel/ea-nodejs10/bin/*
-/usr/bin/node
-/usr/bin/npm
-/usr/bin/npx
 
 %changelog
 * Mon Jan 07 2019 Dan Muey <dan@cpanel.net> - 10.15.0-1
