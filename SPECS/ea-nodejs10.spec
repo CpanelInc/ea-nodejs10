@@ -17,7 +17,7 @@ Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine.
 %setup -qn node-v%{version}-linux-x64
 
 %build
-# empty build section since we're just putting the tarball's contents in place
+# empty build section since we're just putting the tarball's contents in /opt/cpanel/ea-nodejs10
 
 %install
 [ "$RPM_BUILD_ROOT" != "/" ] && rm -rf %{buildroot}
