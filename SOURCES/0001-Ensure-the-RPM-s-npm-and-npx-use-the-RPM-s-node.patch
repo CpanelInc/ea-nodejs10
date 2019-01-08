@@ -1,0 +1,33 @@
+From 46f35133880b3ca0e744cfb26949f35786d3d652 Mon Sep 17 00:00:00 2001
+From: Daniel Muey <dan@cpanel.net>
+Date: Tue, 8 Jan 2019 13:59:56 -0600
+Subject: [PATCH] Ensure the RPM's npm and npx use the RPM's node
+
+---
+ lib/node_modules/npm/bin/npm-cli.js | 2 +-
+ lib/node_modules/npm/bin/npx-cli.js | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/lib/node_modules/npm/bin/npm-cli.js b/lib/node_modules/npm/bin/npm-cli.js
+index 6f76b23..6f35e7a 100755
+--- a/lib/node_modules/npm/bin/npm-cli.js
++++ b/lib/node_modules/npm/bin/npm-cli.js
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env node
++#!/opt/cpanel/ea-nodejs10/bin/node
+ ;(function () { // wrapper in case we're in module_context mode
+   // windows: running "npm blah" in this folder will invoke WSH, not node.
+   /* global WScript */
+diff --git a/lib/node_modules/npm/bin/npx-cli.js b/lib/node_modules/npm/bin/npx-cli.js
+index f404365..c1a68e9 100755
+--- a/lib/node_modules/npm/bin/npx-cli.js
++++ b/lib/node_modules/npm/bin/npx-cli.js
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env node
++#!/opt/cpanel/ea-nodejs10/bin/node
+ 
+ const npx = require('libnpx')
+ const path = require('path')
+-- 
+2.19.1
+

@@ -9,6 +9,7 @@ License: MIT
 Group:   Development/Languages
 URL:  https://nodejs.org
 Source0: https://nodejs.org/dist/v10.15.0/node-v10.15.0-linux-x64.tar.xz
+Patch1: 0001-Ensure-the-RPM-s-npm-and-npx-use-the-RPM-s-node.patch
 Requires: ea-ruby24-mod_passenger
 
 %description
@@ -16,6 +17,7 @@ Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine.
 
 %prep
 %setup -qn node-v%{version}-linux-x64
+%patch1 -p1 -b .shebang
 
 %build
 # empty build section since we're just putting the tarball's contents in place
@@ -24,7 +26,6 @@ Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine.
 [ "$RPM_BUILD_ROOT" != "/" ] && rm -rf %{buildroot}
 mkdir -p $RPM_BUILD_ROOT/opt/cpanel/ea-nodejs10
 cp -r ./* $RPM_BUILD_ROOT/opt/cpanel/ea-nodejs10
-perl -pi -e 's{/usr/bin/env node}{/opt/cpanel/ea-nodejs10/bin/node}' $RPM_BUILD_ROOT/opt/cpanel/ea-nodejs10/bin/np*
 
 %clean
 [ "$RPM_BUILD_ROOT" != "/" ] && rm -rf %{buildroot}
