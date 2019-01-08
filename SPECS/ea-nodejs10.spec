@@ -24,6 +24,7 @@ Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine.
 [ "$RPM_BUILD_ROOT" != "/" ] && rm -rf %{buildroot}
 mkdir -p $RPM_BUILD_ROOT/opt/cpanel/ea-nodejs10
 cp -r ./* $RPM_BUILD_ROOT/opt/cpanel/ea-nodejs10
+perl -pi -e 's{/usr/bin/env node}{/opt/cpanel/ea-nodejs10/bin/node}' $RPM_BUILD_ROOT/opt/cpanel/ea-nodejs10/bin/np*
 
 %clean
 [ "$RPM_BUILD_ROOT" != "/" ] && rm -rf %{buildroot}
