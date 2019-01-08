@@ -9,6 +9,7 @@ License: MIT
 Group:   Development/Languages
 URL:  https://nodejs.org
 Source0: https://nodejs.org/dist/v10.15.0/node-v10.15.0-linux-x64.tar.xz
+Requires: ea-ruby24-mod_passenger
 
 %description
 Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine.
