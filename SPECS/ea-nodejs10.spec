@@ -8,7 +8,7 @@ Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Group:   Development/Languages
 URL:  https://nodejs.org
-Source0: https://nodejs.org/dist/v10.15.0/node-v10.15.0-linux-x64.tar.xz
+Source0: https://nodejs.org/dist/v%{version}/node-v%{version}-linux-x64.tar.xz
 Patch1: 0001-Ensure-the-RPM-s-npm-and-npx-use-the-RPM-s-node.patch
 Requires: ea-ruby24-mod_passenger
 

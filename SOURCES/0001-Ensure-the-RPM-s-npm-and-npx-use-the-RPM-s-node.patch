@@ -1,4 +1,4 @@
-From 46f35133880b3ca0e744cfb26949f35786d3d652 Mon Sep 17 00:00:00 2001
+From a5ac0aba463628b4d584094281464a6948b60994 Mon Sep 17 00:00:00 2001
 From: Daniel Muey <dan@cpanel.net>
 Date: Tue, 8 Jan 2019 13:59:56 -0600
 Subject: [PATCH] Ensure the RPM's npm and npx use the RPM's node
@@ -29,5 +29,5 @@ index f404365..c1a68e9 100755
  const npx = require('libnpx')
  const path = require('path')
 -- 
-2.19.1
+2.21.0
 
