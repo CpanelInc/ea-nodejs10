@@ -1,0 +1,64 @@
+#!/usr/local/cpanel/3rdparty/bin/perl
+# cpanel - find-latest-version                  Copyright(c) 2019 cPanel, L.L.C.
+#                                                           All rights Reserved.
+# copyright@cpanel.net                                         http://cpanel.net
+# This code is subject to the cPanel license. Unauthorized copying is prohibited
+#
+# This provides incremental updates to existing packages in EasyApache4.
+package ea_nginx::find_latest_version;
+
+use strict;
+use warnings;
+
+use lib "../ea-tools/lib/ea4_tool";    # assumes ea-tools is checked out next to this repo
+use ea4_tool::util ();
+
+unless ( caller() ) {
+    ea4_tool::util::find_latest_version( \&_get_required, \&_add_sum );
+}
+
+###############
+#### helpers ##
+###############
+
+sub _get_required {
+    my ($http) = @_;
+
+    my $res = $http->get("https://nodejs.org/dist/");
+    if ( !$res->{success} ) {
+        die "Could not GET nodejs dist page ($res->{status} $res->{reason})\n";
+    }
+
+    # https://nodejs.org/dist/v10.15.3/node-v10.15.3.tar.gz
+    my @nodejs = sort { $b <=> $a } ( $res->{content} =~ m{href="v10\.([0-9]+\.[0-9]+)\/"}g );
+    if ( !@nodejs ) {
+        die "Could not find nodejs versions\n";
+    }
+
+    my $version = "10\.$nodejs[0]";
+    my $name    = "node-v$version-linux-x64.tar.xz";
+    my $url     = "https://nodejs.org/dist/v$version/$name";
+
+    return ( $version, $url, $name );
+}
+
+sub _add_sum {
+    my ( $http, $hr ) = @_;
+
+    my $checksum_url = "https://nodejs.org/dist/v$hr->{version}/SHASUMS256.txt";
+    my $res          = $http->get($checksum_url);
+    if ( !$res->{success} ) {
+        die "Could not GET nodejs SHASUMS page ($res->{status} $res->{reason})\n";
+    }
+
+    my $name     = $hr->{tarball}{name};
+    my $checksum = ( $res->{content} =~ /^((?i)[0-9a-f]+)\s+\Q$name\E$/m )[0];
+    unless ($checksum) {
+        die "No checksum for $name at $checksum_url:\nContent: $res->{content}\n";
+    }
+
+    $hr->{tarball}{sum}{hex}  = $checksum;
+    $hr->{tarball}{sum}{type} = "sha256";
+
+    return;
+}
