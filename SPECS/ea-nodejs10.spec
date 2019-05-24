@@ -3,14 +3,13 @@ Vendor:  cPanel, Inc.
 Summary: Node.js 10
 Version: 10.15.3
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4572 for more details
-%define release_prefix 1
+%define release_prefix 2
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Group:   Development/Languages
 URL:  https://nodejs.org
 Source0: https://nodejs.org/dist/v%{version}/node-v%{version}-linux-x64.tar.xz
 Patch1: 0001-Ensure-the-RPM-s-npm-and-npx-use-the-RPM-s-node.patch
-Requires: ea-ruby24-mod_passenger
 
 %description
 Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine.
@@ -35,6 +34,9 @@ cp -r ./* $RPM_BUILD_ROOT/opt/cpanel/ea-nodejs10
 %attr(0755,root,root) /opt/cpanel/ea-nodejs10/bin/*
 
 %changelog
+* Thu May 23 2019 Daniel Muey <dan@cpanel.net> - 10.15.3-2
+- ZC-5152: Remove `mod_passenger` Requirement from `ea-nodejs`
+
 * Wed May 15 2019 Cory McIntire <cory@cpanel.net> - 10.15.3-1
 - EA-8469: Update ea-nodejs10 from v10.15.0 to v10.15.3
 
