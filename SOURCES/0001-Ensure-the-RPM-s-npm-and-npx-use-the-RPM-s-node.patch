@@ -1,4 +1,4 @@
-From b0bb2ed2e87050421cdd326d21cc3e3065579939 Mon Sep 17 00:00:00 2001
+From da2d18310c55f3875cd2efeb814ff3c1e858e1be Mon Sep 17 00:00:00 2001
 From: Daniel Muey <dan@cpanel.net>
 Date: Tue, 8 Jan 2019 13:59:56 -0600
 Subject: [PATCH] Ensure the RPM's npm and npx use the RPM's node
