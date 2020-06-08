@@ -1,4 +1,6 @@
+%if 0%{?rhel} >= 8
 %global debug_package %{nil}
+%endif
 
 Name:    ea-nodejs10
 Vendor:  cPanel, Inc.
@@ -27,10 +29,12 @@ Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine.
 [ "$RPM_BUILD_ROOT" != "/" ] && rm -rf %{buildroot}
 mkdir -p $RPM_BUILD_ROOT/opt/cpanel/ea-nodejs10
 cp -r ./* $RPM_BUILD_ROOT/opt/cpanel/ea-nodejs10
+%if 0%{?rhel} >= 8
 cd $RPM_BUILD_ROOT/opt/cpanel/ea-nodejs10
 # I am not sure why but the equivalent patch did not work, so using the sed hammer
 find . -name "*.py" -print | xargs sed -i '1s:^#!/usr/bin/env python$:#!/usr/bin/env python2:' 
 sed -i '1s:^#!/usr/bin/python$:#!/usr/bin/python2:' lib/node_modules/npm/node_modules/node-gyp/gyp/samples/samples
+%endif
 
 %clean
 [ "$RPM_BUILD_ROOT" != "/" ] && rm -rf %{buildroot}
