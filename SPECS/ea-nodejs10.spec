@@ -20,7 +20,9 @@ Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine.
 
 %prep
 %setup -qn node-v%{version}-linux-x64
+%if 0%{?rhel} < 8
 %patch1 -p1 -b .shebang
+%endif
 
 %build
 # empty build section since we're just putting the tarball's contents in place
@@ -34,6 +36,15 @@ cd $RPM_BUILD_ROOT/opt/cpanel/ea-nodejs10
 # I am not sure why but the equivalent patch did not work, so using the sed hammer
 find . -name "*.py" -print | xargs sed -i '1s:^#!/usr/bin/env python$:#!/usr/bin/env python2:' 
 sed -i '1s:^#!/usr/bin/python$:#!/usr/bin/python2:' lib/node_modules/npm/node_modules/node-gyp/gyp/samples/samples
+
+# Patch01 only edits 2 files, there are many with node referenced in the
+# shebang
+
+for file in `find . -type f -print | xargs grep -l '^#![ \t]*/usr/bin/env node'`
+do
+    echo "Changing Shebang (env) for" $file
+    sed -i '1s:^#![ \t]*/usr/bin/env node:#!/opt/cpanel/ea-nodejs10/bin/node:' $file
+done
 %endif
 
 %clean
@@ -42,6 +53,7 @@ sed -i '1s:^#!/usr/bin/python$:#!/usr/bin/python2:' lib/node_modules/npm/node_mo
 %files
 /opt/cpanel/ea-nodejs10
 %attr(0755,root,root) /opt/cpanel/ea-nodejs10/bin/*
+
 
 %changelog
 * Mon Jun 29 2020 Julian Brown <julian.brown@cpanel.net> - 10.21.0-2
