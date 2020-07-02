@@ -1,9 +1,13 @@
+%if 0%{?rhel} >= 8
+%global debug_package %{nil}
+%endif
+
 Name:    ea-nodejs10
 Vendor:  cPanel, Inc.
 Summary: Node.js 10
 Version: 10.21.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4572 for more details
-%define release_prefix 1
+%define release_prefix 2
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Group:   Development/Languages
@@ -16,7 +20,9 @@ Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine.
 
 %prep
 %setup -qn node-v%{version}-linux-x64
+%if 0%{?rhel} < 8
 %patch1 -p1 -b .shebang
+%endif
 
 %build
 # empty build section since we're just putting the tarball's contents in place
@@ -25,6 +31,21 @@ Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine.
 [ "$RPM_BUILD_ROOT" != "/" ] && rm -rf %{buildroot}
 mkdir -p $RPM_BUILD_ROOT/opt/cpanel/ea-nodejs10
 cp -r ./* $RPM_BUILD_ROOT/opt/cpanel/ea-nodejs10
+%if 0%{?rhel} >= 8
+cd $RPM_BUILD_ROOT/opt/cpanel/ea-nodejs10
+# I am not sure why but the equivalent patch did not work, so using the sed hammer
+find . -name "*.py" -print | xargs sed -i '1s:^#!/usr/bin/env python$:#!/usr/bin/env python2:' 
+sed -i '1s:^#!/usr/bin/python$:#!/usr/bin/python2:' lib/node_modules/npm/node_modules/node-gyp/gyp/samples/samples
+
+# Patch01 only edits 2 files, there are many with node referenced in the
+# shebang
+
+for file in `find . -type f -print | xargs grep -l '^#![ \t]*/usr/bin/env node'`
+do
+    echo "Changing Shebang (env) for" $file
+    sed -i '1s:^#![ \t]*/usr/bin/env node:#!/opt/cpanel/ea-nodejs10/bin/node:' $file
+done
+%endif
 
 %clean
 [ "$RPM_BUILD_ROOT" != "/" ] && rm -rf %{buildroot}
@@ -33,7 +54,11 @@ cp -r ./* $RPM_BUILD_ROOT/opt/cpanel/ea-nodejs10
 /opt/cpanel/ea-nodejs10
 %attr(0755,root,root) /opt/cpanel/ea-nodejs10/bin/*
 
+
 %changelog
+* Mon Jun 29 2020 Julian Brown <julian.brown@cpanel.net> - 10.21.0-2
+- ZC-6846: Build on C8
+
 * Mon Jun 08 2020 Cory McIntire <cory@cpanel.net> - 10.21.0-1
 - EA-9099: Update ea-nodejs10 from v10.20.1 to v10.21.0
 
