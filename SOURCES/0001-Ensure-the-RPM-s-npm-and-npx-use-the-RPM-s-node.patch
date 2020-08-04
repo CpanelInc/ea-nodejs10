@@ -1,4 +1,4 @@
-From c747f56913d31db3a61a12a1b3199bd53efbd6f6 Mon Sep 17 00:00:00 2001
+From abf4e89c87d3a0f8b3bc906dc08961d761451d4a Mon Sep 17 00:00:00 2001
 From: Daniel Muey <dan@cpanel.net>
 Date: Tue, 8 Jan 2019 13:59:56 -0600
 Subject: [PATCH] Ensure the RPM's npm and npx use the RPM's node
@@ -9,7 +9,7 @@ Subject: [PATCH] Ensure the RPM's npm and npx use the RPM's node
  2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/lib/node_modules/npm/bin/npm-cli.js b/lib/node_modules/npm/bin/npm-cli.js
-index 93eddc7..c47841f 100755
+index c0d9be0..f8158e1 100755
 --- a/lib/node_modules/npm/bin/npm-cli.js
 +++ b/lib/node_modules/npm/bin/npm-cli.js
 @@ -1,4 +1,4 @@
@@ -29,5 +29,5 @@ index f404365..c1a68e9 100755
  const npx = require('libnpx')
  const path = require('path')
 -- 
-2.24.1
+2.25.1
 
