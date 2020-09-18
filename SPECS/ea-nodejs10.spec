@@ -5,7 +5,7 @@
 Name:    ea-nodejs10
 Vendor:  cPanel, Inc.
 Summary: Node.js 10
-Version: 10.22.0
+Version: 10.22.1
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4572 for more details
 %define release_prefix 1
 Release: %{release_prefix}%{?dist}.cpanel
@@ -56,6 +56,9 @@ done
 
 
 %changelog
+* Fri Sep 18 2020 Cory McIntire <cory@cpanel.net> - 10.22.1-1
+- EA-9305: Update ea-nodejs10 from v10.22.0 to v10.22.1
+
 * Mon Aug 03 2020 Cory McIntire <cory@cpanel.net> - 10.22.0-1
 - EA-9210: Update ea-nodejs10 from v10.21.0 to v10.22.0
 
