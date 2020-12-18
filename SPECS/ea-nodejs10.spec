@@ -7,7 +7,7 @@ Vendor:  cPanel, Inc.
 Summary: Node.js 10
 Version: 10.23.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4572 for more details
-%define release_prefix 1
+%define release_prefix 2
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Group:   Development/Languages
@@ -34,7 +34,7 @@ cp -r ./* $RPM_BUILD_ROOT/opt/cpanel/ea-nodejs10
 %if 0%{?rhel} >= 8
 cd $RPM_BUILD_ROOT/opt/cpanel/ea-nodejs10
 # I am not sure why but the equivalent patch did not work, so using the sed hammer
-find . -name "*.py" -print | xargs sed -i '1s:^#!/usr/bin/env python$:#!/usr/bin/env python2:' 
+find . -name "*.py" -print | xargs sed -i '1s:^#!/usr/bin/env python$:#!/usr/bin/env python2:'
 sed -i '1s:^#!/usr/bin/python$:#!/usr/bin/python2:' lib/node_modules/npm/node_modules/node-gyp/gyp/samples/samples
 
 # Patch01 only edits 2 files, there are many with node referenced in the
@@ -47,15 +47,22 @@ do
 done
 %endif
 
+mkdir -p %{buildroot}/etc/cpanel/ea4
+echo -n /opt/cpanel/ea-nodejs10/bin/node > %{buildroot}/etc/cpanel/ea4/passenger.nodejs
+
 %clean
 [ "$RPM_BUILD_ROOT" != "/" ] && rm -rf %{buildroot}
 
 %files
 /opt/cpanel/ea-nodejs10
+/etc/cpanel/ea4/passenger.nodejs
 %attr(0755,root,root) /opt/cpanel/ea-nodejs10/bin/*
 
 
 %changelog
+* Thu Dec 17 2020 Daniel Muey <dan@cpanel.net> - 10.23.0-2
+- ZC-8150: Install /etc/cpanel/ea4/passenger.nodejs
+
 * Tue Nov 03 2020 Cory McIntire <cory@cpanel.net> - 10.23.0-1
 - EA-9400: Update ea-nodejs10 from v10.22.1 to v10.23.0
 
