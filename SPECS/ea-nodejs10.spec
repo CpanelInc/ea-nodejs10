@@ -5,9 +5,9 @@
 Name:    ea-nodejs10
 Vendor:  cPanel, Inc.
 Summary: Node.js 10
-Version: 10.23.0
+Version: 10.23.1
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4572 for more details
-%define release_prefix 2
+%define release_prefix 1
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Group:   Development/Languages
@@ -60,6 +60,9 @@ echo -n /opt/cpanel/ea-nodejs10/bin/node > %{buildroot}/etc/cpanel/ea4/passenger
 
 
 %changelog
+* Mon Jan 04 2021 Cory McIntire <cory@cpanel.net> - 10.23.1-1
+- EA-9502: Update ea-nodejs10 from v10.23.0 to v10.23.1
+
 * Thu Dec 17 2020 Daniel Muey <dan@cpanel.net> - 10.23.0-2
 - ZC-8150: Install /etc/cpanel/ea4/passenger.nodejs
 
