@@ -7,13 +7,15 @@ Vendor:  cPanel, Inc.
 Summary: Node.js 10
 Version: 10.24.1
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4572 for more details
-%define release_prefix 1
+%define release_prefix 2
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Group:   Development/Languages
 URL:  https://nodejs.org
 Source0: https://nodejs.org/dist/v%{version}/node-v%{version}-linux-x64.tar.xz
 Patch1: 0001-Ensure-the-RPM-s-npm-and-npx-use-the-RPM-s-node.patch
+Provides: ea4-nodejs
+Conflicts: ea4-nodejs
 
 %description
 Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine.
@@ -60,6 +62,9 @@ echo -n /opt/cpanel/ea-nodejs10/bin/node > %{buildroot}/etc/cpanel/ea4/passenger
 
 
 %changelog
+* Thu Dec 02 2021 Dan Muey <dan@cpanel.net> - 10.24.1-2
+- ZC-9551: Prep for life w/ multiple `ea-nodejs` versions
+
 * Fri Apr 23 2021 Cory McIntire <cory@cpanel.net> - 10.24.1-1
 - EA-9707: Update ea-nodejs10 from v10.24.0 to v10.24.1
 
