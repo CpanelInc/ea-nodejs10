@@ -1,1 +1,1 @@
-does not debify: Not needed for apt based systems, EOL
+Not needed for apt based systems: It is EOL && ZC-9264 may obsolete ea-nodejs* entirely
