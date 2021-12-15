@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 will be built in Q3 ZC-8878
+=======
+Not needed for apt based systems: It is EOL && ZC-9264 may obsolete ea-nodejs* entirely
+>>>>>>> origin/master
