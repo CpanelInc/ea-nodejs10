@@ -1,13 +1,9 @@
-%if 0%{?rhel} >= 8
-%global debug_package %{nil}
-%endif
-
 Name:    ea-nodejs10
 Vendor:  cPanel, Inc.
 Summary: Node.js 10
 Version: 10.24.1
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4572 for more details
-%define release_prefix 2
+%define release_prefix 3
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Group:   Development/Languages
@@ -62,6 +58,9 @@ echo -n /opt/cpanel/ea-nodejs10/bin/node > %{buildroot}/etc/cpanel/ea4/passenger
 
 
 %changelog
+* Mon May 08 2023 Julian Brown <julian.brown@cpanel.net> - 10.24.1-3
+- ZC-10936: Clean up Makefile and remove debug-package-nil
+
 * Thu Dec 02 2021 Dan Muey <dan@cpanel.net> - 10.24.1-2
 - ZC-9551: Prep for life w/ multiple `ea-nodejs` versions
 
