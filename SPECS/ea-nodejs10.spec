@@ -1,19 +1,21 @@
 Name:    ea-nodejs10
 Vendor:  cPanel, Inc.
-Summary: Node.js 10
+Summary: EOL Node.js 10
 Version: 10.24.1
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4572 for more details
-%define release_prefix 3
+%define release_prefix 4
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Group:   Development/Languages
-URL:  https://nodejs.org
+URL: https://github.com/nodejs/Release#end-of-life-releases
 Source0: https://nodejs.org/dist/v%{version}/node-v%{version}-linux-x64.tar.xz
 Patch1: 0001-Ensure-the-RPM-s-npm-and-npx-use-the-RPM-s-node.patch
 Provides: ea4-nodejs
 Conflicts: ea4-nodejs
 
 %description
+nodejs 10 has reached End of Life.
+
 Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine.
 
 %prep
@@ -58,6 +60,9 @@ echo -n /opt/cpanel/ea-nodejs10/bin/node > %{buildroot}/etc/cpanel/ea4/passenger
 
 
 %changelog
+* Wed Sep 06 2023 Dan Muey <dan@cpanel.net> - 10.24.1-4
+- ZC-11106: Mark ea-nodejs10 as EOL
+
 * Mon May 08 2023 Julian Brown <julian.brown@cpanel.net> - 10.24.1-3
 - ZC-10936: Clean up Makefile and remove debug-package-nil
 
