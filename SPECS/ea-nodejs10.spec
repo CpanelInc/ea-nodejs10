@@ -3,7 +3,7 @@ Vendor:  cPanel, Inc.
 Summary: EOL Node.js 10
 Version: 10.24.1
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4572 for more details
-%define release_prefix 4
+%define release_prefix 5
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Group:   Development/Languages
@@ -60,6 +60,9 @@ echo -n /opt/cpanel/ea-nodejs10/bin/node > %{buildroot}/etc/cpanel/ea4/passenger
 
 
 %changelog
+* Mon May 05 2025 Dan Muey <daniel.muey@webpros.com> - 10.24.1-5
+- ZC-12813: Add Almalinux_10 to DISABLE_BUILD in Makefile
+
 * Wed Sep 06 2023 Dan Muey <dan@cpanel.net> - 10.24.1-4
 - ZC-11106: Mark ea-nodejs10 as EOL
 
